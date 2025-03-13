@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import User from '../models/User.js'; // Ensure correct path and `.js` extension
+
 const router = express.Router();
-const User = require('../models/User');
 
 // Get all users
 router.get('/', async (req, res) => {
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get a single user
+// Get a user by ID
 router.get('/:userId', async (req, res) => {
   try {
     const user = await User.findById(req.params.userId).populate('thoughts').populate('friends');
@@ -62,7 +63,7 @@ router.delete('/:userId', async (req, res) => {
   }
 });
 
-// Add friend
+// Add a friend
 router.post('/:userId/friends/:friendId', async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
@@ -80,7 +81,7 @@ router.post('/:userId/friends/:friendId', async (req, res) => {
   }
 });
 
-// Remove friend
+// Remove a friend
 router.delete('/:userId/friends/:friendId', async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
@@ -98,4 +99,5 @@ router.delete('/:userId/friends/:friendId', async (req, res) => {
   }
 });
 
-module.exports = router;
+
+export default router;
